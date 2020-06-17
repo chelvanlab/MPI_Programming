@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
     char message[256];
     int my_rank;
     MPI_Status status;
@@ -11,18 +12,19 @@ int main(int argc, char** argv) {
 
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
-    if (my_rank == 0){
-        strcpy(message,"Hello there!");
-        MPI_Send(message, strlen(message)+1, MPI_CHAR,1,99,MPI_COMM_WORLD);
+    if (my_rank == 0)
+    {
+        strcpy(message, "Hello there!");
+        MPI_Send(message, strlen(message) + 1, MPI_CHAR, 1, 99, MPI_COMM_WORLD);
+        printf("send\n");
     }
 
-    else if(my_rank==1){
-        MPI_Recv(message, 256, MPI_CHAR,0,99,MPI_COMM_WORLD,&status);
-        printf("process %d received %s\n", my_rank,message);
-
+    else if (my_rank == 1)
+    {
+        MPI_Recv(message, 256, MPI_CHAR, 0, 99, MPI_COMM_WORLD, &status);
+        printf("process %d received %s\n", my_rank, message);
     }
 
     MPI_Finalize();
     return 0;
-
 }
